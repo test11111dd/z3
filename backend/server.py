@@ -40,14 +40,7 @@ class StatusCheck(BaseModel):
 class StatusCheckCreate(BaseModel):
     client_name: str
 
-class UserInfo(BaseModel):
-    name: str
-    email: str
-    phone: str
 
-class ChatMessage(BaseModel):
-    message: str
-    user_info: UserInfo
 
 class ChatResponse(BaseModel):
     response: str
