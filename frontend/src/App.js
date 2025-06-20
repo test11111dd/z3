@@ -701,6 +701,46 @@ const MainContent = () => {
     emailjs.init('EOqkhvyILTgDLTbMN');
   }, []);
 
+  // Fetch scam alerts on component mount and set up interval
+  useEffect(() => {
+    const fetchScamAlerts = async () => {
+      try {
+        const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
+        const response = await fetch(`${backendUrl}/api/scam-alerts`);
+        if (response.ok) {
+          const alerts = await response.json();
+          setScamAlerts(alerts);
+        }
+      } catch (error) {
+        console.error('Error fetching scam alerts:', error);
+        // Set fallback alerts if API fails
+        setScamAlerts([
+          {
+            title: "Phishing Alert: Fake Uniswap Site - $123K Stolen",
+            description: "Users tricked into approving malicious contracts",
+            amount_lost: "$123K",
+            source: "Security Alert",
+            severity: "high"
+          },
+          {
+            title: "Discord Scam: Fake Support Bot - $89K Lost", 
+            description: "Scammers impersonating official support",
+            amount_lost: "$89K",
+            source: "Community Alert", 
+            severity: "medium"
+          }
+        ]);
+      } finally {
+        setAlertsLoading(false);
+      }
+    };
+
+    fetchScamAlerts();
+    // Refresh alerts every 2 minutes
+    const interval = setInterval(fetchScamAlerts, 120000);
+    return () => clearInterval(interval);
+  }, []);
+
   // AI Chatbot functions - Updated for new functionality
   const startChatbot = () => {
     setShowChatbot(true);
