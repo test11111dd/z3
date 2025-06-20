@@ -669,6 +669,12 @@ const MainContent = () => {
 
   const [quote, setQuote] = useState(null);
 
+  // Scam alerts state
+  const [scamAlerts, setScamAlerts] = useState([]);
+  const [alertsLoading, setAlertsLoading] = useState(true);
+
+  const [quote, setQuote] = useState(null);
+
   // AI Chatbot state - Updated for new functionality
   const [showChatbot, setShowChatbot] = useState(false);
   const [chatMessages, setChatMessages] = useState([]);
