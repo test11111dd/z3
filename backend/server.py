@@ -40,11 +40,27 @@ class StatusCheck(BaseModel):
 class StatusCheckCreate(BaseModel):
     client_name: str
 
+class UserInfo(BaseModel):
+    name: str
+    email: str
+    phone: str
 
+class ChatMessage(BaseModel):
+    message: str
+    user_info: UserInfo
 
 class ChatResponse(BaseModel):
     response: str
     recommendations: List[str] = []
+
+class ScamAlert(BaseModel):
+    title: str
+    description: str
+    amount_lost: str
+    source: str
+    timestamp: datetime
+    severity: str  # "high", "medium", "low"
+    link: str = ""
 
 # Add your routes to the router instead of directly to app
 @api_router.get("/")
