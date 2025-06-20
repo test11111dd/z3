@@ -986,6 +986,54 @@ const MainContent = () => {
         </div>
       </nav>
 
+      {/* Live Scam Alert Ticker */}
+      <div className="bg-red-900/90 border-y border-red-700 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-red-900/50 to-orange-900/50"></div>
+        <div className="relative px-4 py-2">
+          <div className="flex items-center">
+            <div className="bg-red-600 text-white px-3 py-1 rounded-full text-sm font-bold mr-4 flex items-center whitespace-nowrap">
+              <span className="w-2 h-2 bg-white rounded-full animate-pulse mr-2"></span>
+              LIVE ALERTS
+            </div>
+            <div className="flex-1 overflow-hidden">
+              {alertsLoading ? (
+                <div className="text-red-200 animate-pulse">Loading recent scams and hacks...</div>
+              ) : (
+                <div className="flex animate-scroll-left">
+                  {scamAlerts.map((alert, index) => (
+                    <div key={index} className="flex items-center text-white text-sm whitespace-nowrap mr-12">
+                      <span className={`inline-block w-2 h-2 rounded-full mr-2 ${
+                        alert.severity === 'high' ? 'bg-red-400' : 
+                        alert.severity === 'medium' ? 'bg-yellow-400' : 'bg-green-400'
+                      }`}></span>
+                      <span className="font-semibold text-red-200">{alert.amount_lost}</span>
+                      <span className="mx-2">•</span>
+                      <span>{alert.title}</span>
+                      <span className="mx-2">•</span>
+                      <span className="text-red-300">Source: {alert.source}</span>
+                    </div>
+                  ))}
+                  {/* Duplicate the alerts for seamless scrolling */}
+                  {scamAlerts.map((alert, index) => (
+                    <div key={`duplicate-${index}`} className="flex items-center text-white text-sm whitespace-nowrap mr-12">
+                      <span className={`inline-block w-2 h-2 rounded-full mr-2 ${
+                        alert.severity === 'high' ? 'bg-red-400' : 
+                        alert.severity === 'medium' ? 'bg-yellow-400' : 'bg-green-400'
+                      }`}></span>
+                      <span className="font-semibold text-red-200">{alert.amount_lost}</span>
+                      <span className="mx-2">•</span>
+                      <span>{alert.title}</span>
+                      <span className="mx-2">•</span>
+                      <span className="text-red-300">Source: {alert.source}</span>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Hero Section */}
       <section id="home" className="relative min-h-screen flex items-center">
         <div className="absolute inset-0">
